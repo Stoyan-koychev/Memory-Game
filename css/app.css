@@ -25,3 +25,66 @@ header {
   margin: 50px 0px 25px;
   text-align: center;
 }
+
+/* Information panel */
+.info-panel,
+.scores {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.scores {
+  line-height: 30px;
+}
+
+.info-panel {
+  margin-bottom:20px;
+}
+
+.score {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: 5px;
+}
+
+.score li {
+  margin-right: 5px;
+  color: rgb(122, 189, 52);
+}
+
+/* Restart Button */
+.restart-btn {
+  justify-content: flex-end;
+}
+
+.restart-btn button {
+  cursor: pointer;
+  height: 30px;
+  padding: 0 25px;
+  font-size: inherit;
+  color: #d9384a;
+  border: none;
+  border-radius: 15px;
+  transition: all .1s ease-in-out;
+}
+
+.restart-btn svg {
+  margin-right: 5px;
+  transition: all .3s ease-in-out;
+}
+
+.restart-btn:hover button svg {
+  transform: rotate(360deg);
+}
+
+.restart-btn button:focus,
+.again-btn button:focus {
+  outline: none;
+}
+
+.restart-btn:hover button {
+  background-color: #d9384a;
+  box-shadow: 0px 5px 30px rgba(217, 56, 74, 0.25);
+  color: white;
+}
