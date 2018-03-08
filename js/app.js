@@ -26,3 +26,8 @@ const ICONS_CLASS = [
   'fab fa-slack',
   'fab fa-dribbble'
 ];
+let matchCounter = 0; //-> Will count the matches
+let cardClicks = 0; // -> Every 2 clicked cards will be equal to one move
+let moveCounter = 0; // -> Move cointer will be shown in the .score-panel
+let savedCards = []; // -> Will hold the clicked cards
+let starsCounter = 0; // -> Will count the shown stars
