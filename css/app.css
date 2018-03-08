@@ -111,6 +111,23 @@ header {
   transform: rotateY(180deg);
 }
 
+/* Match and not-match*/
+.match {
+  background-color: #e5f6d2;
+}
+
+.match p {
+  color: #7abd34;
+}
+
+.not-match {
+  background-color: #fee8ea;
+}
+
+.not-match p {
+  color: #d9384a;
+}
+
 /* Restart Button */
 .restart-btn {
   justify-content: flex-end;
