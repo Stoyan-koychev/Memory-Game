@@ -1,4 +1,4 @@
-const CARDS = Array.prototype.slice.call(document.getElementsByClassName('card'));
+const CARDS = [...document.getElementsByClassName('card')];
 const ICON_HANDLERS = document.getElementsByClassName('icon-handler');
 const MOVES = document.getElementsByTagName('span');
 const RESTART_BTN = document.querySelector('button');
@@ -49,3 +49,12 @@ function shuffle(array) {
 }
 
 shuffledIconsClasses = shuffle(ICONS_CLASS);
+
+function gameLogic(item, index) {
+  item.addEventListener('click', function() {
+    savedCards.push(item);
+    item.classList.add('card-rotate');
+  });
+}
+
+CARDS.forEach( gameLogic );
