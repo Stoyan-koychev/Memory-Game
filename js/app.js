@@ -59,6 +59,13 @@ function gameLogic(item, index) {
   item.addEventListener('click', function() {
     savedCards.push(item);
     item.classList.add('card-rotate');
+
+    //On every 2 clicks the move counter will me increased by one
+    cardClicks++;
+    if (cardClicks % 2 === 0) {
+      moveCounter++;
+      MOVES[0].innerHTML = moveCounter;
+    }
   });
 }
 
