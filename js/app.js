@@ -50,6 +50,11 @@ function shuffle(array) {
 
 shuffledIconsClasses = shuffle(ICONS_CLASS);
 
+// Fill the cadrs with the icons
+for (let i = 0; i < CARDS.length; i++) {
+  CARDS[i].querySelector('.icon-handler').innerHTML = '<i class="'+shuffledIconsClasses[i]+'"></i>';
+};
+
 function gameLogic(item, index) {
   item.addEventListener('click', function() {
     savedCards.push(item);
