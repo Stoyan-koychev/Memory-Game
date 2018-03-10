@@ -35,6 +35,11 @@ let shuffledIconsClasses = []; // -> The shuffled cards will be stored here
 let startTime = (new Date()).getTime();
 let currentTime;
 
+/*
+* Shuffle function,
+* shuffle the array in random order.
+* !!! this function is from -> https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array/25984542
+*/
 function shuffle(array) {
   let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -51,11 +56,16 @@ function shuffle(array) {
 }
 shuffledIconsClasses = shuffle(ICONS_CLASS);
 
-// Fill the cadrs with the icons
+// Fill the cadrs with the shuffled icons
 for (let i = 0; i < CARDS.length; i++) {
   CARDS[i].querySelector('.icon-handler').innerHTML = '<i class="'+shuffledIconsClasses[i]+'"></i>';
 }
 
+/*
+* showStars function,
+* check the numbers of moves and set how much stars are shown
+* the stars counter is for the pop-up
+*/
 function showStars() {
   if (moveCounter > 21) {
     starsCounter = 0;
@@ -80,6 +90,13 @@ function showStars() {
   }
 }
 
+/*
+* restartGame function,
+* 1) shuffle the cards once again
+* 2) go through all card, close them, remove the match class
+*    and assign new icons
+* 3) set all counters to zero and empty the arrays
+*/
 function restartGame() {
   shuffledIconsClasses = shuffle(ICONS_CLASS);
   CARDS.forEach( function(item, index) {
@@ -106,6 +123,15 @@ function restartGame() {
   PLAY_AGAIN_BTN.parentElement.parentElement.classList.add('remove-grats');
 }
 
+/*
+* gameLogic function,
+* 1) add event lister for click,
+* 2) check if there are some items in the savedCards array
+* 3) on click push the card to the savedCards array
+* 4) compare the two clicked cards, on match increses the matchCounter by 1
+*    and empty the savedCards array for the next compare
+* 5) check the matchCounter if is equal to 8, to show the pop-up with the message
+*/
 function gameLogic(item, index) {
   item.addEventListener('click', function() {
 
