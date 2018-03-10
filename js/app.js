@@ -156,7 +156,6 @@ function gameLogic(item, index) {
           savedCards[1].querySelector('.back-of-card').classList.remove('not-match');
           savedCards[0].querySelector('.back-of-card').classList.add('match');
           savedCards[1].querySelector('.back-of-card').classList.add('match');
-          console.log(prevClass+' '+currentClass);
           savedCards = [];
           matchCounter++;
           if (matchCounter === 8) {
