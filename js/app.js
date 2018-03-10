@@ -57,9 +57,9 @@ for (let i = 0; i < CARDS.length; i++) {
 
 function gameLogic(item, index) {
   item.addEventListener('click', function() {
-    savedCards.push(item);
 
-    if ( savedCards.length === 1 ) {
+    if ( savedCards.length === 0 ) {
+        savedCards.push(item);
         item.classList.add('card-rotate');
         cardClicks++;
     } else {
@@ -71,13 +71,24 @@ function gameLogic(item, index) {
             moveCounter++;
             MOVES[0].innerHTML = moveCounter;
         }
+        let prevClass = savedCards[0].querySelector('svg').classList[1];
+        let currentClass = savedCards[1].querySelector('svg').classList[1];
+        if ( currentClass === prevClass ) {
+          savedCards[0].querySelector('.back-of-card').classList.remove('not-match');
+          savedCards[1].querySelector('.back-of-card').classList.remove('not-match');
+          savedCards[0].querySelector('.back-of-card').classList.add('match');
+          savedCards[1].querySelector('.back-of-card').classList.add('match');
+          console.log(prevClass+' '+currentClass);
+          savedCards = [];
+          matchCounter++;
+        } else {
+          savedCards[0].querySelector('.back-of-card').classList.remove('match');
+          savedCards[1].querySelector('.back-of-card').classList.remove('match');
+          savedCards[0].querySelector('.back-of-card').classList.add('not-match');
+          savedCards[1].querySelector('.back-of-card').classList.add('not-match');
+          savedCards = [];
+        }
     }
-    let curentClass = savedCards[1].childNodes[1].childNodes[1].childNodes[0].classList[1];
-    let prevClass = savedCards[0].childNodes[1].childNodes[1].childNodes[0].classList[1];
-    if ( curentClass === prevClass) {
-      console.log('match');
-    }
-    savedCards = [];
 
   });
 }
