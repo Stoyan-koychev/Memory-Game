@@ -49,7 +49,6 @@ function shuffle(array) {
   }
   return array;
 }
-
 shuffledIconsClasses = shuffle(ICONS_CLASS);
 
 // Fill the cadrs with the icons
@@ -79,6 +78,32 @@ function showStars() {
     STARS_PANEL[1].innerHTML = '<i class="'+STARS[1]+'"></i>';
     STARS_PANEL[2].innerHTML = '<i class="'+STARS[1]+'"></i>';
   }
+}
+
+function restartGame() {
+  shuffledIconsClasses = shuffle(ICONS_CLASS);
+  CARDS.forEach( function(item, index) {
+    item.classList.remove('card-rotate');
+    item.querySelector('.back-of-card').classList.remove('match');
+    item.querySelector('.icon-handler').innerHTML = '';
+    item.querySelector('.icon-handler').innerHTML = '<i class="'+shuffledIconsClasses[index]+'"></i>';
+  });
+
+  MOVES[0].innerHTML = 0;
+  matchCounter = 0;
+  cardClicks = 0;
+  moveCounter = 0;
+  savedCards = [];
+  starsCounter = 0;
+  shuffledIconsClasses = [];
+  startTime = (new Date()).getTime();
+
+  starsCounter = 3;
+  STARS_PANEL[0].innerHTML = '<i class="'+STARS[1]+'"></i>';
+  STARS_PANEL[1].innerHTML = '<i class="'+STARS[1]+'"></i>';
+  STARS_PANEL[2].innerHTML = '<i class="'+STARS[1]+'"></i>';
+
+  PLAY_AGAIN_BTN.parentElement.parentElement.classList.add('remove-grats');
 }
 
 function gameLogic(item, index) {
@@ -134,3 +159,5 @@ function gameLogic(item, index) {
 }
 
 CARDS.forEach( gameLogic );
+RESTART_BTN.addEventListener('click', restartGame );
+PLAY_AGAIN_BTN.addEventListener('click', restartGame );
