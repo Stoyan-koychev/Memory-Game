@@ -55,7 +55,31 @@ shuffledIconsClasses = shuffle(ICONS_CLASS);
 // Fill the cadrs with the icons
 for (let i = 0; i < CARDS.length; i++) {
   CARDS[i].querySelector('.icon-handler').innerHTML = '<i class="'+shuffledIconsClasses[i]+'"></i>';
-};
+}
+
+function showStars() {
+  if (moveCounter > 21) {
+    starsCounter = 0;
+    STARS_PANEL[0].innerHTML = '<i class="'+STARS[0]+'"></i>';
+    STARS_PANEL[1].innerHTML = '<i class="'+STARS[0]+'"></i>';
+    STARS_PANEL[2].innerHTML = '<i class="'+STARS[0]+'"></i>';
+  }else if (moveCounter > 16) {
+    starsCounter = 1;
+    STARS_PANEL[0].innerHTML = '<i class="'+STARS[1]+'"></i>';
+    STARS_PANEL[1].innerHTML = '<i class="'+STARS[0]+'"></i>';
+    STARS_PANEL[2].innerHTML = '<i class="'+STARS[0]+'"></i>';
+  }else if (moveCounter > 11) {
+    starsCounter = 2;
+    STARS_PANEL[0].innerHTML = '<i class="'+STARS[1]+'"></i>';
+    STARS_PANEL[1].innerHTML = '<i class="'+STARS[1]+'"></i>';
+    STARS_PANEL[2].innerHTML = '<i class="'+STARS[0]+'"></i>';
+  }else if (moveCounter < 11){
+    starsCounter = 3;
+    STARS_PANEL[0].innerHTML = '<i class="'+STARS[1]+'"></i>';
+    STARS_PANEL[1].innerHTML = '<i class="'+STARS[1]+'"></i>';
+    STARS_PANEL[2].innerHTML = '<i class="'+STARS[1]+'"></i>';
+  }
+}
 
 function gameLogic(item, index) {
   item.addEventListener('click', function() {
@@ -72,6 +96,7 @@ function gameLogic(item, index) {
         if (cardClicks % 2 === 0) {
             moveCounter++;
             MOVES[0].innerHTML = moveCounter;
+            showStars();
         }
         let prevClass = savedCards[0].querySelector('svg').classList[1];
         let currentClass = savedCards[1].querySelector('svg').classList[1];
@@ -88,6 +113,7 @@ function gameLogic(item, index) {
             let time = Math.floor((currentTime-startTime)/1000);
             document.querySelector('.congrats').classList.remove('remove-grats');
             document.querySelector('.grats-moves').innerHTML = moveCounter;
+            document.querySelector('.grats-stars').innerHTML = starsCounter;
             document.querySelector('.timer').innerHTML = time;
             document.querySelector('.congrats').classList.add('show-grats');
           }
