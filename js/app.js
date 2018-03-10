@@ -82,11 +82,15 @@ function gameLogic(item, index) {
           savedCards = [];
           matchCounter++;
         } else {
-          savedCards[0].querySelector('.back-of-card').classList.remove('match');
-          savedCards[1].querySelector('.back-of-card').classList.remove('match');
-          savedCards[0].querySelector('.back-of-card').classList.add('not-match');
-          savedCards[1].querySelector('.back-of-card').classList.add('not-match');
-          savedCards = [];
+        savedCards[0].querySelector('.back-of-card').classList.toggle('not-match');
+        savedCards[1].querySelector('.back-of-card').classList.toggle('not-match');
+        setTimeout(function(){
+            savedCards[0].querySelector('.back-of-card').classList.toggle('not-match');
+            savedCards[1].querySelector('.back-of-card').classList.toggle('not-match');
+            savedCards[0].classList.remove('card-rotate');
+            savedCards[1].classList.remove('card-rotate');
+            savedCards = [];
+        },500);
         }
     }
 
