@@ -32,6 +32,8 @@ let moveCounter = 0; // -> Move cointer will be shown in the .score-panel
 let savedCards = []; // -> Will hold the clicked cards
 let starsCounter = 0; // -> Will count the shown stars
 let shuffledIconsClasses = []; // -> The shuffled cards will be stored here
+let startTime = (new Date()).getTime();
+let currentTime;
 
 function shuffle(array) {
   let currentIndex = array.length, temporaryValue, randomIndex;
@@ -81,6 +83,14 @@ function gameLogic(item, index) {
           console.log(prevClass+' '+currentClass);
           savedCards = [];
           matchCounter++;
+          if (matchCounter === 8) {
+            currentTime = (new Date()).getTime();
+            let time = Math.floor((currentTime-startTime)/1000);
+            document.querySelector('.congrats').classList.remove('remove-grats');
+            document.querySelector('.grats-moves').innerHTML = moveCounter;
+            document.querySelector('.timer').innerHTML = time;
+            document.querySelector('.congrats').classList.add('show-grats');
+          }
         } else {
         savedCards[0].querySelector('.back-of-card').classList.toggle('not-match');
         savedCards[1].querySelector('.back-of-card').classList.toggle('not-match');
