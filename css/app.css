@@ -91,7 +91,7 @@ header {
 
 .front-of-card {
   position: absolute;
-  pointer: cursor;
+  cursor: pointer;
   width: 100%;
   height: 100%;
   background-color: #1b8cff;
@@ -197,7 +197,7 @@ header {
 }
 
 .show-grats {
-  display: show;
+  display: inherit;
 }
 
 .remove-grats {
