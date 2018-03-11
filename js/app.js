@@ -4,6 +4,8 @@ const MOVES = document.getElementsByTagName('span');
 const RESTART_BTN = document.querySelector('button');
 const PLAY_AGAIN_BTN = document.querySelector('.congrats').querySelector('button');
 const STARS_PANEL = document.querySelector('.score').getElementsByTagName('li');
+const MIN_LABEL = document.querySelector('.min');
+const SEC_LABEL = document.querySelector('.sec');
 const STARS = [
   'far fa-star',
   'fas fa-star'

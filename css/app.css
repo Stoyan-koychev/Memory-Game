@@ -53,6 +53,10 @@ header {
   color: rgb(122, 189, 52);
 }
 
+.move-counter {
+  margin-right: 20px;
+}
+
 /* Deck and cards */
 .deck {
   padding: 20px;
