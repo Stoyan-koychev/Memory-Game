@@ -4,8 +4,8 @@ const MOVES = document.getElementsByTagName('span');
 const RESTART_BTN = document.querySelector('button');
 const PLAY_AGAIN_BTN = document.querySelector('.congrats').querySelector('button');
 const STARS_PANEL = document.querySelector('.score').getElementsByTagName('li');
-const MIN_LABEL = document.querySelector('.min');
-const SEC_LABEL = document.querySelector('.sec');
+const MIN_LABEL = document.getElementsByClassName('min');
+const SEC_LABEL = document.getElementsByClassName('sec');
 const STARS = [
   'far fa-star',
   'fas fa-star'
@@ -37,7 +37,8 @@ let shuffledIconsClasses = []; // -> The shuffled cards will be stored here
 let startTime = (new Date()).getTime();
 let currentTime;
 let totalSeconds = 0;
-setInterval(timer, 1000);
+let savedIndex = [];
+//setInterval(timer, 1000);
 
 /*
 * Shuffle function,
@@ -67,8 +68,10 @@ for (let i = 0; i < CARDS.length; i++) {
 
 function timer() {
   totalSeconds++;
-  SEC_LABEL.innerHTML =  pad(totalSeconds % 60) ;
-  MIN_LABEL.innerHTML = pad(parseInt( totalSeconds / 60 ));
+  SEC_LABEL[0].innerHTML = pad(totalSeconds % 60) ;
+  MIN_LABEL[0].innerHTML = pad(parseInt( totalSeconds / 60 ));
+  SEC_LABEL[1].innerHTML = pad(totalSeconds % 60) ;
+  MIN_LABEL[1].innerHTML = pad(parseInt( totalSeconds / 60 ));
 }
 
 function pad(val) {
@@ -119,8 +122,7 @@ function showStars() {
 function restartGame() {
   shuffledIconsClasses = shuffle(ICONS_CLASS);
   CARDS.forEach( function(item, index) {
-    item.classList.remove('card-rotate');
-    item.querySelector('.back-of-card').classList.remove('match');
+    item.classList.remove('match');
     item.querySelector('.icon-handler').innerHTML = '';
     item.querySelector('.icon-handler').innerHTML = '<i class="'+shuffledIconsClasses[index]+'"></i>';
   });
@@ -135,13 +137,15 @@ function restartGame() {
   startTime = (new Date()).getTime();
 
   totalSeconds = 0;
-
+  document.querySelector('.timer').innerHTML = '<p>Timer: <span class="min">0</span>:<span class="sec">0</span></p>';
+  document.querySelector('.grats-container').querySelector('p').innerHTML = 'With <span class="grats-moves">00</span> moves and <span class="grats-stars">0</span> Stars for <span class="min">0</span>:<span class="sec">0</span> minutes';
   starsCounter = 3;
   STARS_PANEL[0].innerHTML = '<i class="'+STARS[1]+'"></i>';
   STARS_PANEL[1].innerHTML = '<i class="'+STARS[1]+'"></i>';
   STARS_PANEL[2].innerHTML = '<i class="'+STARS[1]+'"></i>';
 
   PLAY_AGAIN_BTN.parentElement.parentElement.classList.add('remove-grats');
+  PLAY_AGAIN_BTN.parentElement.parentElement.classList.remove('show-grats');
 }
 
 /*
@@ -155,53 +159,47 @@ function restartGame() {
 */
 function gameLogic(item, index) {
   item.addEventListener('click', function() {
-
-    if ( savedCards.length === 0 ) {
-        savedCards.push(item);
-        item.classList.add('card-rotate');
-        cardClicks++;
-    } else {
-        savedCards.push(item);
-        item.classList.add('card-rotate');
-        //On every 2 clicks the move counter will me increased by one
-        cardClicks++;
-        if (cardClicks % 2 === 0) {
-            moveCounter++;
-            MOVES[0].innerHTML = moveCounter;
-            showStars();
-        }
-        let prevClass = savedCards[0].querySelector('svg').classList[1];
-        let currentClass = savedCards[1].querySelector('svg').classList[1];
-        if ( currentClass === prevClass ) {
-          savedCards[0].querySelector('.back-of-card').classList.remove('not-match');
-          savedCards[1].querySelector('.back-of-card').classList.remove('not-match');
-          savedCards[0].querySelector('.back-of-card').classList.add('match');
-          savedCards[1].querySelector('.back-of-card').classList.add('match');
-          savedCards = [];
-          matchCounter++;
-          if (matchCounter === 8) {
-            currentTime = (new Date()).getTime();
-            let time = Math.floor((currentTime-startTime)/1000);
-            document.querySelector('.congrats').classList.remove('remove-grats');
-            document.querySelector('.grats-moves').innerHTML = moveCounter;
-            document.querySelector('.grats-stars').innerHTML = starsCounter;
-            document.querySelector('.timer').innerHTML = time;
-            document.querySelector('.congrats').classList.add('show-grats');
-          }
-        } else {
-        savedCards[0].querySelector('.back-of-card').classList.toggle('not-match');
-        savedCards[1].querySelector('.back-of-card').classList.toggle('not-match');
-        setTimeout(function(){
-            savedCards[0].querySelector('.back-of-card').classList.toggle('not-match');
-            savedCards[1].querySelector('.back-of-card').classList.toggle('not-match');
-            savedCards[0].classList.remove('card-rotate');
-            savedCards[1].classList.remove('card-rotate');
-            savedCards = [];
-        },500);
-        }
+    cardClicks++;
+    if (cardClicks % 2 === 0) {
+      moveCounter++;
+      MOVES[0].innerHTML = moveCounter;
+      showStars();
     }
+    if ( item.classList[1] !== 'match' && item.classList[1] !== 'card-rotate' ) {
+      savedCards.push(item);
+      savedIndex.push(index);
+      item.classList.toggle('card-rotate');
 
-  });
+      if ( savedCards.length > 1 && savedIndex[0] != savedIndex[1] ) {
+          if ( savedCards[0].innerHTML === savedCards[1].innerHTML ) {
+            savedCards[1].classList.toggle('card-rotate');
+            savedCards[0].classList.toggle('card-rotate');
+            savedCards[1].classList.toggle('match');
+            savedCards[0].classList.toggle('match');
+            matchCounter++;
+            savedCards = [];
+            savedIndex = [];
+            if ( matchCounter === 8 ) {
+              document.querySelector('.grats-moves').innerHTML = moveCounter;
+              document.querySelector('.grats-stars').innerHTML = starsCounter;
+              PLAY_AGAIN_BTN.parentElement.parentElement.classList.toggle('remove-grats');
+              PLAY_AGAIN_BTN.parentElement.parentElement.classList.toggle('show-grats');
+            }
+          } else {
+            savedCards[1].classList.toggle('not-match');
+            savedCards[0].classList.toggle('not-match');
+            setTimeout(function() {
+              savedCards[1].classList.toggle('card-rotate');
+              savedCards[0].classList.toggle('card-rotate');
+              savedCards[1].classList.toggle('not-match');
+              savedCards[0].classList.toggle('not-match');
+              savedCards = [];
+              savedIndex = [];
+            }, 500);
+          }
+      }
+    }
+  });// End event listener
 }
 
 CARDS.forEach( gameLogic );
