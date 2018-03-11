@@ -149,13 +149,7 @@ function restartGame() {
 }
 
 /*
-* gameLogic function,
-* 1) add event lister for click,
-* 2) check if there are some items in the savedCards array
-* 3) on click push the card to the savedCards array
-* 4) compare the two clicked cards, on match increses the matchCounter by 1
-*    and empty the savedCards array for the next compare
-* 5) check the matchCounter if is equal to 8, to show the pop-up with the message
+* gameLogic function
 */
 function gameLogic(item, index) {
   item.addEventListener('click', function() {
@@ -165,12 +159,16 @@ function gameLogic(item, index) {
       MOVES[0].innerHTML = moveCounter;
       showStars();
     }
+    // Check if the card have .match or .card-rotate
     if ( item.classList[1] !== 'match' && item.classList[1] !== 'card-rotate' ) {
       savedCards.push(item);
       savedIndex.push(index);
       item.classList.toggle('card-rotate');
 
+      // Check if the savedCards array is larger than 1 and if is clicking on the same card
       if ( savedCards.length > 1 && savedIndex[0] != savedIndex[1] ) {
+
+          // Check if the saved cards are the same
           if ( savedCards[0].innerHTML === savedCards[1].innerHTML ) {
             savedCards[1].classList.toggle('card-rotate');
             savedCards[0].classList.toggle('card-rotate');
@@ -179,6 +177,8 @@ function gameLogic(item, index) {
             matchCounter++;
             savedCards = [];
             savedIndex = [];
+
+            // Check if the matches are 8 to show the pop-up
             if ( matchCounter === 8 ) {
               clearInterval(time);
               document.querySelector('.grats-moves').innerHTML = moveCounter;
