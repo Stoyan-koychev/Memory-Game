@@ -38,7 +38,7 @@ let startTime = (new Date()).getTime();
 let currentTime;
 let totalSeconds = 0;
 let savedIndex = [];
-//setInterval(timer, 1000);
+let time = setInterval(timer, 1000);
 
 /*
 * Shuffle function,
@@ -134,7 +134,7 @@ function restartGame() {
   savedCards = [];
   starsCounter = 0;
   shuffledIconsClasses = [];
-  startTime = (new Date()).getTime();
+  time = setInterval(timer, 1000);
 
   totalSeconds = 0;
   document.querySelector('.timer').innerHTML = '<p>Timer: <span class="min">0</span>:<span class="sec">0</span></p>';
@@ -180,6 +180,7 @@ function gameLogic(item, index) {
             savedCards = [];
             savedIndex = [];
             if ( matchCounter === 8 ) {
+              clearInterval(time);
               document.querySelector('.grats-moves').innerHTML = moveCounter;
               document.querySelector('.grats-stars').innerHTML = starsCounter;
               PLAY_AGAIN_BTN.parentElement.parentElement.classList.toggle('remove-grats');
