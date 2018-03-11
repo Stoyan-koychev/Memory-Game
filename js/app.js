@@ -36,6 +36,8 @@ let starsCounter = 0; // -> Will count the shown stars
 let shuffledIconsClasses = []; // -> The shuffled cards will be stored here
 let startTime = (new Date()).getTime();
 let currentTime;
+let totalSeconds = 0;
+setInterval(timer, 1000);
 
 /*
 * Shuffle function,
@@ -61,6 +63,21 @@ shuffledIconsClasses = shuffle(ICONS_CLASS);
 // Fill the cadrs with the shuffled icons
 for (let i = 0; i < CARDS.length; i++) {
   CARDS[i].querySelector('.icon-handler').innerHTML = '<i class="'+shuffledIconsClasses[i]+'"></i>';
+}
+
+function timer() {
+  totalSeconds++;
+  SEC_LABEL.innerHTML =  pad(totalSeconds % 60) ;
+  MIN_LABEL.innerHTML = pad(parseInt( totalSeconds / 60 ));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
 }
 
 /*
@@ -116,6 +133,8 @@ function restartGame() {
   starsCounter = 0;
   shuffledIconsClasses = [];
   startTime = (new Date()).getTime();
+
+  totalSeconds = 0;
 
   starsCounter = 3;
   STARS_PANEL[0].innerHTML = '<i class="'+STARS[1]+'"></i>';
